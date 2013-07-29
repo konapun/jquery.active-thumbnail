@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test Active Thumbnail</title>
+		<script type="text/javascript" src="vendor/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="vendor/jquery.waitforimages.min.js"></script>
+		<script type="text/javascript" src="jquery.active-thumbnail.js"></script>
+		
+		<style>
+			body {
+				background-color: #c3c3c3;
+			}
+			.center {
+				margin: 0px auto;
+			}
+			.overflow {
+				width: 800px;
+				height: 800px;
+				overflow: auto;
+			}
+			.thumbnail {
+				width: 50px;
+				height: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>Example</h2>
+		<span id="thumbnail" class="thumbnail" data-image="plot"></span>
+		<div class="center overflow">
+			<img id="plot" src="img/zen_sna_7.png"></img>
+		</div>
+		
+		<script type="text/javascript">
+			$(function() {
+				$('#thumbnail').activeThumbnail();
+			});
+		</script>
+	</body>
+</html>
