@@ -57,15 +57,12 @@
 		
 		if (settings.clickEnabled) {
 			$(thumbnail).click(function(e) {
-			/*
-				TODO
 				var offset = $(thumbnail).offset(),
 				    x = e.pageX - offset.left,
 				    y = e.pageY - offset.top;
 					
-				container.scrollLeft();
-				container.scrollTop();
-			*/
+				container.scrollLeft(x * settings.width/2 * container.width() / imgWidth);
+				container.scrollTop(y * settings.height/2 * container.height() / imgHeight);
 			});
 		}
 		return this;
