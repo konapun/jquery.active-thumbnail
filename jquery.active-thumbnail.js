@@ -29,7 +29,6 @@
 				});
 			};
 		
-		
 		thumbnail.onload = function() {
 			var $thumbnail = $(this);
 			$this.css('position', 'relative');
@@ -46,8 +45,8 @@
 			});
 			
 			$this.append(selectUI);
-			highlightActiveRegion();
 			$this.append(thumbnail);
+			highlightActiveRegion();
 		};
 		img.get(0).onload = function() {
 			thumbnail.src = img.prop('src');
