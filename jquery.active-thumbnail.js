@@ -17,7 +17,7 @@
 		    }, opts);
 		
 		var img = $('#' + settings.image),
-			container = settings.container ? $('#' + settings.container) : $(img.parent()),
+		    container = settings.container ? $('#' + settings.container) : $(img.parent()),
 		    thumbnail = new Image(),
 		    selectUI = $('<div></div>'),
 		    highlightActiveRegion = function() {
@@ -30,6 +30,21 @@
 				});
 			};
 		
+		/* Called via plugin caller: recalculate size and position based on container and image sizes;
+		 * only needs to be called when the image or container changes sizes
+		 */
+		selectUI.update = function() {
+			var $thumbnail = $(thumbnail);
+			selectUI.css({
+				width: container.width() / img.width() * $thumbnail.width(),
+				height: container.height() / img.height() * $thumbnail.height()
+			});
+		};
+		
+		selectUI.getThumbnail = function() {
+			return thumbnail;
+		};
+		
 		thumbnail.onload = function() {
 			var $thumbnail = $(this);
 			$this.css('position', 'relative');
@@ -39,11 +54,9 @@
 			});
 			
 			selectUI.css({
-				width: container.width() / img.width() * $thumbnail.width(),
-				height: container.height() / img.height() * $thumbnail.height(),
 				position: 'absolute',
 				border: '1px solid ' + settings.color
-			});
+			}).update();
 			
 			$this.append(selectUI);
 			$this.append(thumbnail);
@@ -73,6 +86,7 @@
 				container.scrollTop(y * settings.height/2 * container.height() / img.height());
 			});
 		}
-		return this;
+		
+		return selectUI;
 	}
 }(jQuery));
