@@ -12,17 +12,18 @@
 				width: 100,
 				height: 100,
 				color: 'red',
+				container: '', // default will be the parent of the image element
 				clickEnabled: true // whether or not clicking the thumbnail interacts with the scrollable region
-			}, opts);
+		    }, opts);
 		
 		var img = $('#' + settings.image),
-			container = $(img.parent()),
+			container = settings.container ? $('#' + settings.container) : $(img.parent()),
 		    thumbnail = new Image(),
 		    selectUI = $('<div></div>'),
 		    highlightActiveRegion = function() {
 				var thumbOffset = $(thumbnail).offset(),
 				    scrollLeftOffset = container.scrollLeft() / img.width() * settings.width,
-					scrollTopOffset = container.scrollTop() / img.height() * settings.height
+				    scrollTopOffset = container.scrollTop() / img.height() * settings.height
 				selectUI.offset({
 					top: thumbOffset.top + scrollTopOffset,
 					left: thumbOffset.left + scrollLeftOffset
@@ -48,8 +49,14 @@
 			$this.append(thumbnail);
 			highlightActiveRegion();
 		};
-		img.get(0).onload = function() {
-			thumbnail.src = img.prop('src');
+		
+		var _img = img.get(0),
+		    loadComplete = function() {
+				thumbnail.src = img.prop('src');
+		    };
+		_img.onload = loadComplete;
+		if (_img.complete) {
+			loadComplete();
 		}
 		
 		container.scroll(function(e) {
