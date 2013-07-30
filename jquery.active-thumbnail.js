@@ -17,19 +17,19 @@
 		
 		var img = $('#' + settings.image),
 			container = $(img.parent()),
-			imgWidth = img.width(),
-			imgHeight = img.height();
 		    thumbnail = new Image(),
 		    selectUI = $('<div></div>'),
 		    highlightActiveRegion = function() {
 				var thumbOffset = $(thumbnail).offset(),
-				    scrollLeftOffset = container.scrollLeft() / imgWidth * settings.width,
-					scrollTopOffset = container.scrollTop() / imgHeight * settings.height
+				    scrollLeftOffset = container.scrollLeft() / img.width() * settings.width,
+					scrollTopOffset = container.scrollTop() / img.height() * settings.height
 				selectUI.offset({
 					top: thumbOffset.top + scrollTopOffset,
 					left: thumbOffset.left + scrollLeftOffset
 				});
 			};
+		
+		
 		thumbnail.onload = function() {
 			var $thumbnail = $(this);
 			$this.css('position', 'relative');
@@ -39,17 +39,19 @@
 			});
 			
 			selectUI.css({
-				width: container.width() / imgWidth * $thumbnail.width(),
-				height: container.height() / imgHeight * $thumbnail.height(),
+				width: container.width() / img.width() * $thumbnail.width(),
+				height: container.height() / img.height() * $thumbnail.height(),
 				position: 'absolute',
 				border: '1px solid ' + settings.color
 			});
 			
+			$this.append(selectUI);
 			highlightActiveRegion();
+			$this.append(thumbnail);
 		};
-		thumbnail.src = img.prop('src');
-		$this.append(thumbnail);
-		$this.append(selectUI);
+		img.get(0).onload = function() {
+			thumbnail.src = img.prop('src');
+		}
 		
 		container.scroll(function(e) {
 			highlightActiveRegion();
@@ -61,8 +63,8 @@
 				    x = e.pageX - offset.left,
 				    y = e.pageY - offset.top;
 					
-				container.scrollLeft(x * settings.width/2 * container.width() / imgWidth);
-				container.scrollTop(y * settings.height/2 * container.height() / imgHeight);
+				container.scrollLeft(x * settings.width/2 * container.width() / img.width());
+				container.scrollTop(y * settings.height/2 * container.height() / img.height());
 			});
 		}
 		return this;
