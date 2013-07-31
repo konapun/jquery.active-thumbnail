@@ -25,8 +25,8 @@
 				    scrollLeftOffset = container.scrollLeft() / img.width() * settings.width,
 				    scrollTopOffset = container.scrollTop() / img.height() * settings.height
 				selectUI.offset({
-					top: thumbOffset.top + scrollTopOffset,
-					left: thumbOffset.left + scrollLeftOffset
+					top: thumbOffset.top + scrollTopOffset - 1,
+					left: thumbOffset.left + scrollLeftOffset - 1
 				});
 			};
 		
@@ -34,10 +34,14 @@
 		 * only needs to be called when the image or container changes sizes
 		 */
 		selectUI.update = function() {
-			var $thumbnail = $(thumbnail);
+			var $thumbnail = $(thumbnail),
+			    twidth = $thumbnail.width(),
+				theight = $thumbnail.height(),
+				width = container.width() / img.width() * twidth,
+				height = container.height() / img.height() * theight
 			selectUI.css({
-				width: container.width() / img.width() * $thumbnail.width(),
-				height: container.height() / img.height() * $thumbnail.height()
+				width: width > twidth ? twidth : width,
+				height: height > theight ? theight : height
 			});
 		};
 		
