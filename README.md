@@ -27,5 +27,4 @@ or in the init options
   * **container**: The id of the container element. If not provided, the parent element of the image is used
   
 ## Returns
-	The element representing the selected portion of the thumbnail. This has a method called `upate` which recalculates its size
-	in relation to the image and container, so it can be called when the image zooms
+The element representing the selected portion of the thumbnail. This has a method called `upate` which recalculates its size in relation to the image and container, so it can be called when the image zooms
